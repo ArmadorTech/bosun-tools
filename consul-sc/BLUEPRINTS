@@ -1,0 +1,17 @@
+
+
+$ consul-sc --consul=consul.service.consul:8500 register service_name "@this"|ip "port" 80 tags=one,two,three
+
+$ consul-sc --consul=consul.service.consul:8500 ls name=glob | port=XX | tags
+
+
+
+
+
+    /v1/catalog/register : Registers a new node, service, or check
+    /v1/catalog/deregister : Deregisters a node, service, or check
+    /v1/catalog/datacenters : Lists known datacenters
+    /v1/catalog/nodes : Lists nodes in a given DC
+    /v1/catalog/services : Lists services in a given DC
+    /v1/catalog/service/<service> : Lists the nodes in a given service
+    /v1/catalog/node/<node> : Lists the services provided by a node

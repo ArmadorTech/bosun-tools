@@ -1,0 +1,8 @@
+
+$ consul-event fire <event_name> <payload>
+
+
+
+# (directed against localhost:8500 by default)
+$ consul-event handler <event_name> <handler_script> <params>
+$ consul-event unwatch <event_name>

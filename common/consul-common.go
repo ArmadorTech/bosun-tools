@@ -9,6 +9,7 @@ import (
 )
 
 type ConsulService struct {
+	Id	string
 	Name string
 	IP   net.IP
 	Port uint16
@@ -18,7 +19,15 @@ type ConsulService struct {
 
 // implement Stringer{}
 func (s *ConsulService) String() string {
-	return fmt.Sprintf("ConsulService(%s) @%s:%d %s", s.Name, s.IP,s.Port, s.Tags)
+
+	var serv_name string
+
+	if "" != s.Id {
+		serv_name = fmt.Sprintf("%s[%s]", s.Name, s.Id)
+	} else {
+		serv_name = s.Name
+	}
+	return fmt.Sprintf("ConsulService{%s} @%s:%d %s", serv_name, s.IP,s.Port, s.Tags)
 }
 
 
@@ -28,7 +37,7 @@ func ParseTags(input string) ([]string, error) {
 		return nil, errors.New("empty tags argument")
 	}
 
-	rt := make([]string, 0)
+	rt := make([]string, 0, 1)
 	ts := strings.Split(input, ",")
 	for _, v := range ts {
 		rt = append(rt, v)

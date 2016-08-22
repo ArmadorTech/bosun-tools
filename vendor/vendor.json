@@ -1,0 +1,31 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "ZY6NCrR80zUmtOtPtKffbmFxRWw=",
+			"path": "github.com/hashicorp/consul/api",
+			"revision": "64e3033d3c7f80af3f925f4665a9bc1af75d6153",
+			"revisionTime": "2016-07-06T17:54:05Z"
+		},
+		{
+			"checksumSHA1": "40vJyUB4ezQSn/NSadsKEOrudMc=",
+			"path": "github.com/inconshreveable/mousetrap",
+			"revision": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75",
+			"revisionTime": "2014-10-17T20:07:13Z"
+		},
+		{
+			"checksumSHA1": "EYkx4sXDLSEd1xUtGoXRsfd5cpw=",
+			"path": "github.com/ryanuber/go-glob",
+			"revision": "572520ed46dbddaed19ea3d9541bdd0494163693",
+			"revisionTime": "2016-02-26T08:37:05Z"
+		},
+		{
+			"checksumSHA1": "LX0D/Jz35jVOWAVAuk7+/EnKOf8=",
+			"path": "github.com/spf13/cobra",
+			"revision": "b83ace34b5933e0f06ede0ed87abee0d6e1fe2cc",
+			"revisionTime": "2016-08-15T18:16:03Z"
+		}
+	],
+	"rootPath": "consul-tools"
+}

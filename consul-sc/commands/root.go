@@ -35,10 +35,7 @@ The tool is intended to replace any and all (raw)HTTP-based interactions, such a
 		fmt.Println("Running at ", misc.LocalHostname(), " -- ", misc.LocalIPs())
 
 		fmt.Println("verbosity->", verbosity)
-
-		fmt.Println("direct->", consulConf.AgentAPI)
-		fmt.Println("consul->", consulConf.URL)
-		fmt.Println("datacenter->", consulConf.Datacenter)
+		cc.PrintConfig(&consulConf)
 
 		// invoke help...
 		cmd.HelpFunc()(cmd, []string{})
@@ -47,32 +44,22 @@ The tool is intended to replace any and all (raw)HTTP-based interactions, such a
 	},
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		tracer.SetLevel(verbosity)
+		_ = cc.ValidateConfig(&consulConf)
 		return nil
 	},
 }
 
 func init() {
 
-	pf := RootCmd.PersistentFlags()
-	pf.CountVarP(&verbosity, "verbose", "v", "Enable (and/or increase) verbosity level")
-	pf.BoolVarP(&consulConf.AgentAPI, "passthrough", "z", false, "Enable direct operation against a Consul server, bypassing the (normally local) agent")
-
-	pf.StringVar(&consulConf.URL, "consul", "", "Consul HTTP API endpoint to use (default: $CONSUL_HOST)")
-	pf.StringVar(&consulConf.Datacenter, "dc", "", "Consul datacenter identifier to use")
-
-	var url, dc string
-	if url = os.Getenv(k_ENV_CONSUL); "" == url {
-		url = k_CONSUL_URL
-	}
-	if dc = os.Getenv(k_ENV_DC); "" == dc {
-		dc = k_CONSUL_DC
-	}
-	consulConf.URL = url
-	consulConf.Datacenter = dc
+	cc.SetupConsulFlags(RootCmd.PersistentFlags(),
+		&consulConf, 
+		&verbosity,
+	)
 
 	RootCmd.AddCommand(cmdRegister)
 
 	RootCmd.AddCommand(cmdLs)
+	RootCmd.AddCommand(cmdSearch)
 
 	RootCmd.AddCommand(cmdInspect)
 

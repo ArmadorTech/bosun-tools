@@ -1,0 +1,12 @@
+
+# Register/deregister nodes
+$ consul-node [common_flags] register --dc=? <node_name> <ip.address> [wan:<ip>]
+$ consul-node [common_flags] deregister|rm [--force|-f] <node_name>
+
+# List nodes
+$ consul-node [common_flags] ls|list [filter]
+
+$ consul-node [common_flags] inspect <node_name>
+
+# List services at the specified node
+$ consul-node [common_flags] services <node_id>

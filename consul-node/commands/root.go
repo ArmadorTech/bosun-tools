@@ -31,7 +31,6 @@ var RootCmd = &cobra.Command{
 The tool is intended to replace any and all (raw)HTTP-based interactions, such as cURL-based scripts, with a modern and user-friendly CLI tool`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Do Stuff Here
 		fmt.Println("Running at ", misc.LocalHostname(), "--", misc.LocalIPs())
 
 		fmt.Println("verbosity->", verbosity)

@@ -57,8 +57,6 @@ func doRegister(cmd *cobra.Command, args []string) {
 		Address:	args[1],
 //		TaggedAddresses map[string]string
 		Datacenter:	consulConf.Datacenter,
-//		Service         *AgentService
-// 		Check           *AgentCheck
 	}, &wo)
 	
 	if nil!=err {

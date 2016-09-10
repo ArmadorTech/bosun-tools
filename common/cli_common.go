@@ -2,7 +2,7 @@ package consul_common
 
 import (
 	"github.com/spf13/pflag"
-	"errors"
+// 	"errors"
 	"fmt"
 	"os"
 )
@@ -42,28 +42,12 @@ func SetupConsulFlags(ff *pflag.FlagSet, consulConf *ClientConfig, vv *int) erro
 	consulConf.Datacenter = dc
 	
 	// Extended flags: HTTP basic auth & SSL
-	ff.StringVar(&consulConf.AuthUser, "user", "u", "Consul (HTTP basic auth) Username")
-	ff.StringVar(&consulConf.AuthPass, "pass", "", "Consul (HTTP basic auth) Password")
-	
-	
+	ff.StringVar(&consulConf.AuthUser, "http-user", "", "Consul HTTP basic auth Username")
+	ff.StringVar(&consulConf.AuthPass, "http-pass", "", "Consul HTTP basic auth Password")
 	
 	
 	return nil
 }
-
-func ValidateConfig(cf *ClientConfig) error {
-	
-	if ""!=cf.SSLkey && ""!=cf.SSLcert {
-		cf.ConnFlags = SSLenabled
-	}
-	
-	if ""==cf.SSLcacert && !cf.TLSnoverify {
-		return errors.New("No CAcert provided, and strict TLS verification requested")
-	}
-	
-	return nil
-}
-
 
 func PrintConfig(consulConf *ClientConfig) {
 	

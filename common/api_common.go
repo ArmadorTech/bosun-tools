@@ -82,6 +82,9 @@ func ConsulClient(params ClientConfig) (*consulapi.Client,error) {
 
 func httpAuth(params *ClientConfig) (*consulapi.HttpBasicAuth,error) {
 	
+	if ""==params.AuthUser && ""==params.AuthPass {
+		return &consulapi.HttpBasicAuth{}, nil
+	}
 	if ""==params.AuthUser || ""==params.AuthPass {
 		return nil, errors.New("AUTH: Both username and password need to be provided")
 	}

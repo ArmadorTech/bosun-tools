@@ -3,10 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "ZY6NCrR80zUmtOtPtKffbmFxRWw=",
+			"checksumSHA1": "BMEJLBjl91k5k3vMMzzT7G2SO1U=",
 			"path": "github.com/hashicorp/consul/api",
-			"revision": "64e3033d3c7f80af3f925f4665a9bc1af75d6153",
-			"revisionTime": "2016-07-06T17:54:05Z"
+			"revision": "bb3b714b17c568a98f1fbcf34d12d6987d8acc08",
+			"revisionTime": "2016-09-02T05:20:12Z"
+		},
+		{
+			"checksumSHA1": "Uzyon2091lmwacNsl1hCytjhHtg=",
+			"path": "github.com/hashicorp/go-cleanhttp",
+			"revision": "ad28ea4487f05916463e2423a55166280e8254b5",
+			"revisionTime": "2016-04-07T17:41:26Z"
+		},
+		{
+			"checksumSHA1": "E3Xcanc9ouQwL+CZGOUyA/+giLg=",
+			"path": "github.com/hashicorp/serf/coordinate",
+			"revision": "9432bc08aa8d486e497e27f84878ebbe8c1eab66",
+			"revisionTime": "2016-08-16T23:01:54Z"
 		},
 		{
 			"checksumSHA1": "40vJyUB4ezQSn/NSadsKEOrudMc=",

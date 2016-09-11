@@ -15,7 +15,6 @@ var (
 
 
 func PrettyJSON(w io.Writer, d []byte) {
-	//b, err := json.Marshal(roads)
 	var buf bytes.Buffer
 	
 	json.Indent(&buf, d, jsonPrefix, jsonIndent)

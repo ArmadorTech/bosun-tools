@@ -1,8 +1,10 @@
 package commands
 
 import (
-	_ "errors"
- 	"fmt"
+	cc "../../common"
+	"fmt"
+	"github.com/doblenet/go-doblenet/tracer"
+	consulapi "github.com/hashicorp/consul/api"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -33,6 +35,30 @@ func doRemove(cmd *cobra.Command, args []string) {
 
 	fmt.Println("force=",forceRm)
 
+	if len(args)<1 {
+		fmt.Printf("FATAL: No arguments provided")
+		os.Exit(1)
+	}
+	
+	consul, err := cc.ConsulClient(consulConf)
+	if nil != err {
+		tracer.FatalErr(err)
+	}
+	
+	var wo = consulapi.WriteOptions{Datacenter: consulConf.Datacenter}
+	if ""!=consulConf.Token {
+		wo.Token = consulConf.Token
+	}
+	
+	catalog := consul.Catalog()
+	_, err = catalog.Deregister(&consulapi.CatalogDeregistration{
+		Node: args[0],
+		Datacenter: consulConf.Datacenter,
+	}, &wo)
+	cc.CheckServerError(err)
+	if nil!=err {
+		tracer.FatalErr(err)
+	}
 	
 	os.Exit(0)
 }

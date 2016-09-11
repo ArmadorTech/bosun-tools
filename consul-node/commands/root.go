@@ -60,7 +60,11 @@ func init() {
 	RootCmd.AddCommand(cmdLs)
 
  	RootCmd.AddCommand(cmdInspect)
-
+	
+	RootCmd.AddCommand(cmdMaintenance)
+	
+	RootCmd.AddCommand(cmdSelf)
+	RootCmd.AddCommand(cmdInfo)
 }
 
 func setupCommonFlags(ff *pflag.FlagSet) {

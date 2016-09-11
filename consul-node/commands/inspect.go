@@ -11,12 +11,12 @@ import (
 	"encoding/json"
 )
 
-// $ consul-sc --consul=consul.service.consul:8500 inspect <ID>
+// $ consul-sc --consul=consul.service.consul:8500 inspect <nodename>
 
 var cmdInspectJSON bool
 var cmdInspect = &cobra.Command{
-	Use:   "inspect <ID>",
-	Short: "Return detailed information on a service, given its ID or name",
+	Use:   "inspect <nodename>",
+	Short: "Return detailed information on a node, given its name",
 	Long:  `Queries the target Consul Service Catalog and lists the available entries`,
 	Run:   doInspect,
 }

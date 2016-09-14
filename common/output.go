@@ -17,27 +17,6 @@ func CEtoString(ce consulapi.CoordinateEntry) string {
 	return fmt.Sprintf("@%s: {%v %g %f %f}", ce.Node, v, e, a, h)
 }
 
-// type KVPair struct {
-//     Key         string
-//     CreateIndex uint64
-//     ModifyIndex uint64
-//     LockIndex   uint64
-//     Flags       uint64
-//     Value       []byte
-//     Session     string
-// }
-
-func KVPairtoString(p *consulapi.KVPair, ll,lx bool) string {
-
-	return fmt.Sprintf("%s: %s", p.Key, string(p.Value))
-	
-	
-// 	var buf bytes.Buffer
-// 	
-// 	json.Indent(&buf, d, jsonPrefix, jsonIndent)
-// 	return string(buf)
-}
-
 
 func PrintPropMap(w io.Writer, x map[string]map[string]interface{}, lx bool) {
 

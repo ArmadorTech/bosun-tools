@@ -83,7 +83,7 @@ func ConsulClient(params ClientConfig) (*consulapi.Client,error) {
 func httpAuth(params *ClientConfig) (*consulapi.HttpBasicAuth,error) {
 	
 	if ""==params.AuthUser && ""==params.AuthPass {
-		return &consulapi.HttpBasicAuth{}, nil
+		return nil, nil
 	}
 	if ""==params.AuthUser || ""==params.AuthPass {
 		return nil, errors.New("AUTH: Both username and password need to be provided")
@@ -103,7 +103,7 @@ func CheckServerError(e error) {
 	}
 	
 	if consulapi.IsServerError(e) {
-		fmt.Fprintf(os.Stderr,"ERROR: Server error '%s' --- please try again later", e.Error())
+		fmt.Fprintf(os.Stderr,"ERROR: Server error '%s' --- please try again later\n", e.Error())
 		os.Exit(3)
 	}
 }

@@ -24,7 +24,7 @@ var cmdInspect = &cobra.Command{
 func init() {
 	cf := cmdInspect.Flags()
 	setupCommonFlags(cf)
-	cf.BoolVarP(&cmdInspectJSON, "pretty-json", "x", false, "Format result as JSON (vs 'plain object')")
+	cf.BoolVarP(&cmdInspectJSON, "pretty", "h", false, "Format result as human-friendly JSON (vs 'plain object')")
 }
 
 func doInspect(cmd *cobra.Command, args []string) {

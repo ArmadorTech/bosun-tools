@@ -3,6 +3,18 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "itM8AReZA5oK3DcktywVGgz3bw4=",
+			"path": "github.com/doblenet/go-doblenet/cliapp",
+			"revision": "18d0f851a647094c73c0167c23a42f16b5b005cc",
+			"revisionTime": "2016-09-13T16:53:05Z"
+		},
+		{
+			"checksumSHA1": "VyfWatduSfXxqKfo0gWlzsDBgXY=",
+			"path": "github.com/doblenet/go-doblenet/tracer",
+			"revision": "18d0f851a647094c73c0167c23a42f16b5b005cc",
+			"revisionTime": "2016-09-13T16:53:05Z"
+		},
+		{
 			"checksumSHA1": "BMEJLBjl91k5k3vMMzzT7G2SO1U=",
 			"path": "github.com/hashicorp/consul/api",
 			"revision": "bb3b714b17c568a98f1fbcf34d12d6987d8acc08",
@@ -33,10 +45,16 @@
 			"revisionTime": "2016-02-26T08:37:05Z"
 		},
 		{
-			"checksumSHA1": "LX0D/Jz35jVOWAVAuk7+/EnKOf8=",
+			"checksumSHA1": "fEGgcE+iSzLkxdrbRj7j/vV7a7E=",
 			"path": "github.com/spf13/cobra",
-			"revision": "b83ace34b5933e0f06ede0ed87abee0d6e1fe2cc",
-			"revisionTime": "2016-08-15T18:16:03Z"
+			"revision": "9c28e4bbd74e5c3ed7aacbc552b2cab7cfdfe744",
+			"revisionTime": "2016-08-30T17:49:25Z"
+		},
+		{
+			"checksumSHA1": "AdV2H8HNLmUZbKzDdGme3s1gffI=",
+			"path": "github.com/spf13/pflag",
+			"revision": "7b17cc4658ef5ca157b986ea5c0b43af7938532b",
+			"revisionTime": "2016-09-11T19:46:38Z"
 		}
 	],
 	"rootPath": "consul-tools"

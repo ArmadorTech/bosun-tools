@@ -6,6 +6,7 @@ import (
 	consulapi "github.com/hashicorp/consul/api"
 	"encoding/json"
 	"io"
+	"strings"
 )
 
 func CEtoString(ce consulapi.CoordinateEntry) string {
@@ -15,6 +16,19 @@ func CEtoString(ce consulapi.CoordinateEntry) string {
 	a := ce.Coord.Adjustment
 	h := ce.Coord.Height
 	return fmt.Sprintf("@%s: {%v %g %f %f}", ce.Node, v, e, a, h)
+}
+
+func Map2String(o map[string]string) string {
+	
+	if 0 == len(o) {
+		return ""
+	}
+	
+	var t []string
+	for k,v:= range o {
+		t=append(t,fmt.Sprintf("%s:%s", k,v))
+	}
+	return "{"+strings.Join(t,", ")+"}"
 }
 
 

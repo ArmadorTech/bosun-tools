@@ -6,7 +6,9 @@ import (
 	"github.com/doblenet/go-doblenet/tracer"
  	consulapi "github.com/hashicorp/consul/api"
 	"github.com/spf13/cobra"
+	"io"
 	"os"
+	"text/tabwriter"
 )
 
 var (
@@ -58,37 +60,66 @@ func doLs(cmd *cobra.Command, args []string) {
 	
 	kv := consul.KV()
 	
+	var e error
+	n := len(prefix)
 	for _,p := range prefix {
 		
 		w := keyName(p)
-		if lsLL {
+		
+		// Output header for every entry (multi-ls)
+		if n>1 {
 			fmt.Printf("%s:\n", w)
 		}
-		result,_,err := kv.Keys(w, kdelim, &consulapi.QueryOptions{
-			Datacenter:        consulConf.Datacenter,
-			AllowStale:        true,
-			RequireConsistent: false,
-		})	
-		cc.CheckServerError(err)
-		if nil!=err {
-			tracer.FatalErr(err)
-		}
 
- 		var i int
- 		var k string
-		for i, k = range result {
-			if lsLL { 
-				fmt.Println(k)
-			} else {
-				fmt.Printf("%s ",k)
-			}
+		if !lsLL {
+			e = doListS(os.Stdout, kv,w)
+		} else {
+			e = doListL(os.Stdout, kv,w)
 		}
-		if lsLL {
-			fmt.Print("Total ",i+1)
+		cc.CheckServerError(e)
+		if nil!=e {
+			tracer.FatalErr(e)
 		}
 	}
-	fmt.Println()
 	os.Exit(0)
+}
+
+func doListS(w io.Writer, kv *consulapi.KV, p string) error {
+
+	// Simple key listing (just use "Keys")
+	result,_,err := kv.Keys(p, kdelim, &consulapi.QueryOptions{
+		Datacenter:        consulConf.Datacenter,
+		AllowStale:        true,
+		RequireConsistent: false,
+	})
+	if nil != err {
+		return err
+	}
+
+	for _,k := range result {
+		fmt.Fprintf(w, "%s ",k)
+	}
+	return nil
+}
+
+func doListL(w io.Writer, kv *consulapi.KV, p string) error {
+
+	// Extended key listing: "List" needed
+	result,_,err := kv.List(p, &consulapi.QueryOptions{
+		Datacenter:        consulConf.Datacenter,
+		AllowStale:        true,
+		RequireConsistent: false,
+	})
+	if nil != err {
+		return err
+	}
+
+	t := tabwriter.NewWriter(w, 3,4,1,' ',0)
+	for _,v := range result {
+		fmt.Fprintln(t, cc.KVPair2String(v))
+	}
+	t.Flush()
+	return nil
 }
 
 func doTree(cmd *cobra.Command, args []string) {
@@ -116,14 +147,15 @@ func doTree(cmd *cobra.Command, args []string) {
 		tracer.FatalErr(err)
 	}
 	
-	for _,p := range result {
+	t := tabwriter.NewWriter(os.Stdout, 7,4,1,' ',0)
+	for _,v := range result {
 		
 		if !lsLL && !lsLX {
-			fmt.Println(p.Key)
+			fmt.Println(v.Key)
 		} else {
-			fmt.Println(cc.KVPairtoString(p, lsLL,lsLX))
+			fmt.Fprintln(t,cc.KVPair2String(v))
 		}
 	}
-	
+	t.Flush()
 	os.Exit(0)
 }

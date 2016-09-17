@@ -12,6 +12,7 @@ import (
 
 var (
 	getJSON	bool
+	kvFlags	int64
 )
 
 var cmdGet = &cobra.Command{
@@ -44,9 +45,11 @@ func init() {
 	
 	cf2 := cmdSet.Flags()
 	setupCommonFlags(cf2)
+	cf2.Int64VarP(&kvFlags,"flags","f",0,"Flags for the value to be set")
 	
 	cf3 := cmdSetMulti.Flags()
 	setupCommonFlags(cf3)
+	cf3.Int64VarP(&kvFlags,"flags","f",0,"Flags for the value to be set")
 }
 
 func doGet(cmd *cobra.Command, args []string) {
@@ -115,6 +118,10 @@ func doSet(cmd *cobra.Command, args []string) {
 	
 	// XXX: TODO: add more functionality
 	var p = consulapi.KVPair{Key: keyname, Value: []byte(args[1])}
+	if 0 != kvFlags {
+		p.Flags = uint64(kvFlags)
+	}
+
 	_, e := kv.Put(&p,&wo)
 	cc.CheckServerError(e)
 	if nil!= e {
@@ -130,25 +137,29 @@ func doSetMulti(cmd *cobra.Command, args []string) {
 		tracer.Fatal("Provided arguments need to be even (key-value pairs)")
 		os.Exit(1)
 	}
-	
+
 	consul, err := cc.ConsulClient(consulConf)
 	if nil != err {
 		tracer.FatalErr(err)
 	}
-	
+
 	kv := consul.KV()
 	var wo consulapi.WriteOptions
 	if ""!=consulConf.Token {
 		wo.Token = consulConf.Token
 	}
-	
+
 	var v consulapi.KVPair
 	for i:=0 ; i <= len(args)/2; i+=2 {
 	
 		// reset the KVPair
 		v = consulapi.KVPair{}
+		// ..next iteration data (including flags)
 		v.Key = keyName(args[i])
-		v.Value = []byte( args[i+1])
+		v.Value = []byte(args[i+1])
+		if 0 != kvFlags {
+			v.Flags = uint64(kvFlags)
+		}
 		
 		_,e := kv.Put(&v,&wo)
 		cc.CheckServerError(e)
@@ -156,8 +167,8 @@ func doSetMulti(cmd *cobra.Command, args []string) {
 			tracer.FatalErr(e)
 		}
 		
-		tracer.TraceV(2,"Putting KV:", cc.KVPairtoString(&v, false,false))
+		tracer.TraceV(2,"Putting KV:", cc.KVPair2String(&v))
 	}
-	
+
 	os.Exit(0)
 }

@@ -66,14 +66,13 @@ func nodeList(client *consulapi.Client, ll bool) error {
 	
 	for _,x := range result {
 	
-		if ll {
- 			// XXX: API v0.7
-			fmt.Printf("%s\t%s %v\n", x.Node, x.Address, x.TaggedAddresses)			
-// 			return fmt.Sprintf("%s\t%s", x.Node, x.Address)
-		} else {
+		if !ll {
 			fmt.Println(x.Node)
+		} else {
+			// XXX: API v0.7
+			fmt.Printf("%s\t%s %s\n", x.Node, x.Address,
+							cc.Map2String(x.TaggedAddresses))
 		}
-		
 	}
 	return nil
 }
